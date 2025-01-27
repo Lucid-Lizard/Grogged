@@ -21,10 +21,10 @@ namespace Grogged.ECS.Systems
             {
                 var velocity = componentManager.GetComponent<VelocityComponent>(idk.entityId);
 
-                if (currentKeyboard.IsKeyDown(Keys.W)) velocity.Y -= 5;
-                if (currentKeyboard.IsKeyDown(Keys.S)) velocity.Y += 5;
-                if (currentKeyboard.IsKeyDown(Keys.A)) velocity.X -= 5;
-                if (currentKeyboard.IsKeyDown(Keys.D)) velocity.X += 5;
+                if (currentKeyboard.IsKeyDown(Keys.W)) velocity.Y = -200;
+                if (currentKeyboard.IsKeyDown(Keys.S)) velocity.Y = 200;
+                if (currentKeyboard.IsKeyDown(Keys.A)) velocity.X = -200;
+                if (currentKeyboard.IsKeyDown(Keys.D)) velocity.X = 200;
 
                 
                 

@@ -70,11 +70,11 @@ namespace Grogged
                 {
                     var sprite = spriteComponent.sprite;
                     var sourceRect = spriteComponent.sourceRect == Rectangle.Empty ? new Rectangle(0, 0, 32, 32) : spriteComponent.sourceRect;
-                    var color = spriteComponent.color == default(Color) ? Color.White : spriteComponent.color;
+                    var color = spriteComponent.color;
 
                     if (sprite == null)
                     {
-                        _spriteBatch.DrawRectangle(new Rectangle((int)position.X, (int)position.Y, sourceRect.Width, sourceRect.Height), Color.Red);
+                        _spriteBatch.DrawRectangle(new Rectangle((int)position.X, (int)position.Y, sourceRect.Width, sourceRect.Height), color);
                     }
                     else
                     {

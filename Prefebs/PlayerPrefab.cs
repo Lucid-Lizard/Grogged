@@ -20,7 +20,7 @@ namespace Grogged.Prefebs
                 color = Color.Blue
             });
 
-            entityManager.AddComponent<PhysicsComponent>(entityId, new() { Friction = 0.97f });
+            entityManager.AddComponent<PhysicsComponent>(entityId, new() { Friction = 0.90f });
 
             entityManager.AddComponent<TypeComponent>(entityId, new() { Type = Type });
         }
