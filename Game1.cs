@@ -13,7 +13,7 @@ namespace Grogged
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private ECSCoordinator _ecsCoordinator;
+        public static ECSCoordinator _ecsCoordinator;
 
         public Game1()
         {
@@ -27,11 +27,11 @@ namespace Grogged
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _ecsCoordinator = new ECSCoordinator();
 
-            // Register a movement system
+           /* // Register a movement system
             _ecsCoordinator._SystemManager.AddSystem(new MovementSystem());
             _ecsCoordinator._SystemManager.AddSystem(new PlayerMovementSystem());
             _ecsCoordinator._SystemManager.AddSystem(new PhysicsSystem());
-
+*/
             // Create an example entity using the Dummy prefab
             var entity = _ecsCoordinator._EntityManager.CreateEntity<Dummy>();
             var player = _ecsCoordinator._EntityManager.CreateEntity<PlayerPrefab>();

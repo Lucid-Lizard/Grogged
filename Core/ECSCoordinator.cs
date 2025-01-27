@@ -9,6 +9,7 @@ public class ECSCoordinator
     {
         _EntityManager = new EntityManager();
         _SystemManager = new SystemManager();
+        _SystemManager.LoadAllSystems();
     }
 
     public void Update(float deltaTime)
