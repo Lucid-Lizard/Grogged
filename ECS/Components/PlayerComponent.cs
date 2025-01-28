@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grogged.ECS.Components
 {
-    public struct PlayerComponent
+    public class PlayerComponent
     {
 
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grogged.ECS.Components
 {
-    public struct TileComponent
+    public class TileComponent
     {
         public int tileId;
         public int[] collisionPins;

@@ -17,7 +17,7 @@ public class EntityManager
         return entityId;
     }
 
-    public void AddComponent<T>(int entityId, T component) where T : struct
+    public void AddComponent<T>(int entityId, T component) where T : class
     {
         if (!components.ContainsKey(typeof(T)))
         {
@@ -26,7 +26,7 @@ public class EntityManager
         components[typeof(T)][entityId] = component;
     }
 
-    public void RemoveComponent<T>(int entityId) where T : struct
+    public void RemoveComponent<T>(int entityId) where T : class
     {
         components[typeof(T)].Remove(entityId);
     }
@@ -41,7 +41,7 @@ public class EntityManager
         return null;
     }
 
-    public IEnumerable<(int entityId, T component)> GetAllComponents<T>() where T : struct
+    public IEnumerable<(int entityId, T component)> GetAllComponents<T>() where T : class
     {
         if (components.TryGetValue(typeof(T), out var entityComponents))
         {

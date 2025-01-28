@@ -12,9 +12,12 @@ namespace Grogged.Prefebs
         public override void SetTileDefaults(TileComponent tileComponent)
         {
             tileComponent.tileId = 0;
-            /*The tile has no collision. basically, ive divided a tiles collision up into 9 parts of the tile called "pins". 
-              0 = no collision, 1 = solid collision. There may be more types in the future, or maybe even collision types could
-            act as triggers for methods. so if the player is colliding with a "2" pin, they could take damage or something. 
+            /*  Tile collision is handled with 9 pins.
+             *  0 = no collision
+             *  1 = solid collision
+             *  2+ will be programmed to be handled as collision event triggers.
+             *  Ex. 2 could trigger fire debuff on player, 3 low friction on player, etc.
+             *
              */
             tileComponent.collisionPins = new int[9]
             {

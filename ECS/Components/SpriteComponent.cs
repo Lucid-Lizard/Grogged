@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Grogged.ECS.Components
 {
-    public struct SpriteComponent
+    public class SpriteComponent
     {
         public Texture2D sprite = null;
         public Rectangle sourceRect;
