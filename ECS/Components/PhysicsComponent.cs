@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grogged.ECS.Components
 {
-    public class PhysicsComponent
+    public struct PhysicsComponent
     {
         public float Friction;
         public float MaxmiumVelocity;

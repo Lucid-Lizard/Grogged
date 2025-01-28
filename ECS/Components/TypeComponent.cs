@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grogged.ECS.Components
 {
-    public class TypeComponent
+    public struct TypeComponent
     {
         public string Type;
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grogged.ECS.Components
 {
-    public class PositionComponent
+    public struct PositionComponent
     {
         public float X { get; set; }
         public float Y { get; set; }
