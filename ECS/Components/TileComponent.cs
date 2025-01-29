@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 
 namespace Grogged.ECS.Components
 {
-    public class TileComponent
+    public struct TileComponent
     {
         public int tileId;
         public int[] collisionPins;
+
+        public static TileComponent Create(int tileId, int[] collisionPins)
+        {
+            return new TileComponent
+            {
+                tileId = tileId,
+                collisionPins = collisionPins
+            };
+        }
+
     }
 }

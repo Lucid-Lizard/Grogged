@@ -1,55 +1,71 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 public class EntityManager
 {
     private int nextEntityId = 0;
-    private Dictionary<Type, Dictionary<int, object>> components = new();
+    private Dictionary<Type, object> components = new();
+
+    private Dictionary<int, T> GetComponentDictionary<T>() where T : struct
+    {
+        if (!components.ContainsKey(typeof(T)))
+        {
+            components[typeof(T)] = new Dictionary<int, T>();
+        }
+        return (Dictionary<int, T>)components[typeof(T)];
+    }
 
     public int CreateEntity<T>() where T : Prefab, new()
     {
         int entityId = nextEntityId++;
         var prefab = new T();
-        prefab.Configure(this, entityId); // Configure the entity with the prefab
+        prefab.Configure(this, entityId);
         return entityId;
     }
 
-    public void AddComponent<T>(int entityId, T component) where T : class
+    public void AddComponent<T>(int entityId, T component) where T : struct
     {
-        if (!components.ContainsKey(typeof(T)))
+        var componentDict = GetComponentDictionary<T>();
+        componentDict[entityId] = component;
+    }
+
+    public void RemoveComponent<T>(int entityId) where T : struct
+    {
+        if (components.TryGetValue(typeof(T), out var dict))
         {
-            components[typeof(T)] = new Dictionary<int, object>();
+            ((Dictionary<int, T>)dict).Remove(entityId);
         }
-        components[typeof(T)][entityId] = component;
     }
 
-    public void RemoveComponent<T>(int entityId) where T : class
+    public bool TryGetComponent<T>(int entityId, out T component) where T : struct
     {
-        components[typeof(T)].Remove(entityId);
-    }
-    public T GetComponent<T>(int entityId) where T : class
-    {
-        if (components.TryGetValue(typeof(T), out var entityComponents) &&
-            entityComponents.TryGetValue(entityId, out var component))
+        component = default;
+        if (components.TryGetValue(typeof(T), out var dict))
         {
-            return component as T;
+            var typedDict = (Dictionary<int, T>)dict;
+            return typedDict.TryGetValue(entityId, out component);
         }
-
-        return null;
+        return false;
     }
 
-    public IEnumerable<(int entityId, T component)> GetAllComponents<T>() where T : class
+    public T GetComponent<T>(int entityId) where T : struct
     {
-        if (components.TryGetValue(typeof(T), out var entityComponents))
+        if (TryGetComponent<T>(entityId, out var component))
         {
-            foreach (var kvp in entityComponents)
+            return component;
+        }
+        throw new KeyNotFoundException($"No component of type {typeof(T)} found for entity {entityId}");
+    }
+
+    public IEnumerable<(int entityId, T component)> GetAllComponents<T>() where T : struct
+    {
+        if (components.TryGetValue(typeof(T), out var dict))
+        {
+            var typedDict = (Dictionary<int, T>)dict;
+            foreach (var kvp in typedDict)
             {
-                if (kvp.Value is T component)
-                {
-                    yield return (kvp.Key, component);
-                }
+                yield return (kvp.Key, kvp.Value);
             }
         }
     }
-
 }

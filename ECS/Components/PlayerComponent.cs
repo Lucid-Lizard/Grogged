@@ -1,7 +1,10 @@
 ﻿namespace Grogged.ECS.Components
 {
-    public class PlayerComponent
+    public struct PlayerComponent
     {
-
+        public static PlayerComponent Create()
+        {
+            return new PlayerComponent();
+        }
     }
 }

@@ -9,7 +9,8 @@ namespace Grogged.ECS.Systems
         {
             foreach(var kvp in componentManager.GetAllComponents<SpriteComponent>())
             {
-                kvp.entityId.Component<SpriteComponent>().color.R += 1;
+                var spriteComp = kvp.entityId.Component<SpriteComponent>();
+                spriteComp.color.R += 1;
             }
         }
     }

@@ -10,11 +10,8 @@ public class MovementSystem : SystemBase
             int entityId = kvp.entityId;
             PositionComponent position = kvp.component;
             var velocity = componentManager.GetComponent<VelocityComponent>(entityId);
-            if (velocity != null)
-            {
                 position.X += velocity.X * deltaTime;
                 position.Y += velocity.Y * deltaTime;
-            }
         }
     }
 }

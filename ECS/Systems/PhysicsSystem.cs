@@ -15,19 +15,20 @@ namespace Grogged.ECS.Systems
         {
             foreach(var kvp in componentManager.GetAllComponents<PhysicsComponent>())
             {
-                if(componentManager.GetComponent<VelocityComponent>(kvp.entityId) != null)
-                {
-                    componentManager.GetComponent<VelocityComponent>(kvp.entityId).X *= kvp.component.Friction;
-                    componentManager.GetComponent<VelocityComponent>(kvp.entityId).Y *= kvp.component.Friction;
-                    componentManager.GetComponent<VelocityComponent>(kvp.entityId).X =
-                        MathHelper.Clamp(componentManager.GetComponent<VelocityComponent>(kvp.entityId).X,
+                var VelComp = componentManager.GetComponent<VelocityComponent>(kvp.entityId);
+
+
+                    VelComp.X *= kvp.component.Friction;
+                VelComp.Y *= kvp.component.Friction;
+                    VelComp.X =
+                        MathHelper.Clamp(VelComp.X,
                         -kvp.component.MaxmiumVelocity,
                         kvp.component.MaxmiumVelocity);
-                    componentManager.GetComponent<VelocityComponent>(kvp.entityId).Y =
-                        MathHelper.Clamp(componentManager.GetComponent<VelocityComponent>(kvp.entityId).Y,
+                    VelComp.Y =
+                        MathHelper.Clamp(VelComp.Y,
                         -kvp.component.MaxmiumVelocity,
                         kvp.component.MaxmiumVelocity);
-                }
+                
             }
         }
     }

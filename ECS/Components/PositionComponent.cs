@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Grogged.ECS.Components
+﻿namespace Grogged.ECS.Components
 {
-    public class PositionComponent
+    public struct PositionComponent
     {
         public float X { get; set; }
         public float Y { get; set; }
+
+        public static PositionComponent Create(float x, float y)
+        {
+            return new PositionComponent
+            {
+                X = x,
+                Y = y
+            };
+        }
     }
 }

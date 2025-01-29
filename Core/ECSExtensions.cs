@@ -2,9 +2,9 @@
 {
     public static class ECSExtensions
     {
-        public static T Component<T>(this int ID) where T : class
+        public static T Component<T>(this int ID) where T : struct
         {
-            return Game1._ecsCoordinator._EntityManager.GetComponent<T>(ID) as T;
+            return Game1._ecsCoordinator._EntityManager.GetComponent<T>(ID);
         }
     }
 }

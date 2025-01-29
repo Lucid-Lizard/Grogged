@@ -13,20 +13,23 @@ namespace Grogged.Prefebs
         {
             base.Configure(entityManager, entityId);
 
-            entityManager.AddComponent<SpriteComponent>(entityId, new()
-            {
-                texturePath = "playerSprite",
-                sourceRect = new Rectangle(0, 0, 32, 64),
-                color = Color.Blue
-            });
 
-            entityManager.AddComponent<PhysicsComponent>(entityId, new()
-            {
-                Friction = 0.90f,
-                MaxmiumVelocity = 200
-            });
+            entityManager.AddComponent<SpriteComponent>(entityId, SpriteComponent.Create(
+                null,
+                new(0, 0, 32, 64),
+                Color.Blue,
+                1f,
+                0f,
+                "PlayerSprite"
+                ));
 
-            entityManager.AddComponent<TypeComponent>(entityId, new() { Type = Type });
+            entityManager.AddComponent<PhysicsComponent>(entityId, PhysicsComponent.Create(
+                0.85f,
+                200
+                ));
+            
+
+            entityManager.AddComponent<TypeComponent>(entityId, TypeComponent.Create(Type));
         }
     }
 }
