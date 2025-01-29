@@ -8,10 +8,13 @@ public class MovementSystem : SystemBase
         foreach (var kvp in componentManager.GetAllComponents<PositionComponent>())
         {
             int entityId = kvp.entityId;
-            PositionComponent position = kvp.component;
+            var position = kvp.component;
             var velocity = componentManager.GetComponent<VelocityComponent>(entityId);
-                position.X += velocity.X * deltaTime;
-                position.Y += velocity.Y * deltaTime;
+
+            position.X += velocity.X * deltaTime;
+            position.Y += velocity.Y * deltaTime;
+
+            componentManager.AddComponent(entityId, position);
         }
     }
 }

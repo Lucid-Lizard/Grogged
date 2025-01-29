@@ -8,7 +8,7 @@ namespace Grogged.Prefebs
 {
     public class PlayerPrefab : Dummy
     {
-        public static string Type;
+        public static string Type = "Player";
         public override void Configure(EntityManager entityManager, int entityId)
         {
             base.Configure(entityManager, entityId);

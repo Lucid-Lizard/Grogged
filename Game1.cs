@@ -61,8 +61,8 @@ namespace Grogged
             {
                 var position = kvp.component;
                 var hasSpriteComponent = _ecsCoordinator._EntityManager.TryGetComponent<SpriteComponent>(kvp.entityId, out var spriteComponent);
-                Debug.WriteLine($"{kvp.entityId}: {hasSpriteComponent}");
-                if (hasSpriteComponent)
+
+                if (!hasSpriteComponent)
                 {
                     _spriteBatch.DrawRectangle(new Rectangle((int)position.X, (int)position.Y, 32, 32), Color.Red);
                 }
@@ -71,10 +71,9 @@ namespace Grogged
                     var sprite = spriteComponent.sprite;
                     var sourceRect = spriteComponent.sourceRect == Rectangle.Empty ? new Rectangle(0, 0, 32, 32) : spriteComponent.sourceRect;
                     var color = spriteComponent.color;
-                    Debug.WriteLine($"{kvp.entityId}: {sprite == null} {sourceRect} {color.ToString()}");
+
                     if (sprite == null)
                     {
-                        Debug.WriteLine($"{kvp.entityId}: {position.X} {position.Y}");
                         _spriteBatch.DrawRectangle(new Rectangle((int)position.X, (int)position.Y, sourceRect.Width, sourceRect.Height), color);
                     }
                     else
