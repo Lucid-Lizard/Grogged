@@ -9,12 +9,12 @@ using Grogged.Prefebs;
 using Grogged.Core;
 namespace Grogged
 {
-
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public static ECSCoordinator _ecsCoordinator;
+        private Camera cam; //m
 
         public static int myPlayer;
 
@@ -23,6 +23,7 @@ namespace Grogged
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            cam=new(Vector2.Zero); //m
         }
 
         protected override void Initialize()
@@ -49,15 +50,19 @@ namespace Grogged
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _ecsCoordinator.Update(deltaTime);
 
+            var comonent = myPlayer.Component<SpriteComponent>();  //m
+            cam.follow(comonent.sourceRect, Globals.windowSize.ToVector2());  //m
+
             base.Update(gameTime);
+
         }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            _spriteBatch.Begin(); //m
             foreach(var kvp in _ecsCoordinator._EntityManager.GetAllComponents<SpriteComponent>())
             {
-
+                //sprite.draw(_spritebatch, new Vector2(.....
             }
 
             _spriteBatch.End();
