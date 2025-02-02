@@ -34,8 +34,6 @@ namespace Grogged
             Globals.Content = this.Content;
             Globals.windowSize = Window.ClientBounds.Size;
             
-            // Create an example entity using the Dummy prefab
-            _ecsCoordinator._EntityManager.CreateEntity<Dummy>();
             myPlayer = _ecsCoordinator._EntityManager.CreateEntity<PlayerPrefab>();
 
             base.Initialize();
@@ -48,7 +46,6 @@ namespace Grogged
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Pass delta time to ECS update
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _ecsCoordinator.Update(deltaTime);
 
