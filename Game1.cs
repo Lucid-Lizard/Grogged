@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using Grogged.ECS.Systems;
 using Grogged.Prefebs;
+using Grogged.Core;
 namespace Grogged
 {
 
@@ -15,7 +16,6 @@ namespace Grogged
         private SpriteBatch _spriteBatch;
         public static ECSCoordinator _ecsCoordinator;
 
-        public static int cameraId;
         public static int myPlayer;
 
         public Game1()
@@ -30,18 +30,21 @@ namespace Grogged
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _ecsCoordinator = new ECSCoordinator();
 
-
+            Globals.SpriteBatch = this._spriteBatch;
+            Globals.Content = this.Content;
+            Globals.windowSize = Window.ClientBounds.Size;
+            
             // Create an example entity using the Dummy prefab
             _ecsCoordinator._EntityManager.CreateEntity<Dummy>();
             myPlayer = _ecsCoordinator._EntityManager.CreateEntity<PlayerPrefab>();
-
-            cameraId = _ecsCoordinator._EntityManager.CreateEntity<CameraPrefab>();
 
             base.Initialize();
         }
 
         protected override void Update(GameTime gameTime)
         {
+            Globals.Update(gameTime);
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -55,35 +58,9 @@ namespace Grogged
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            var cameraPosition = _ecsCoordinator._EntityManager.GetComponent<CameraComponent>(cameraId);
-
-            _spriteBatch.Begin();
-
-            foreach (var kvp in _ecsCoordinator._EntityManager.GetAllComponents<PositionComponent>())
+            foreach(var kvp in _ecsCoordinator._EntityManager.GetAllComponents<SpriteComponent>())
             {
-                var position = kvp.component;
-                var screenPosition = new Vector2(position.X - cameraPosition.X, position.Y - cameraPosition.Y);
-                var hasSpriteComponent = _ecsCoordinator._EntityManager.TryGetComponent<SpriteComponent>(kvp.entityId, out var spriteComponent);
 
-                if (!hasSpriteComponent)
-                {
-                    _spriteBatch.DrawRectangle(new Rectangle((int)screenPosition.X, (int)screenPosition.Y, 32, 32), Color.Red);
-                }
-                else
-                {
-                    var sprite = spriteComponent.sprite;
-                    var sourceRect = spriteComponent.sourceRect == Rectangle.Empty ? new Rectangle(0, 0, 32, 32) : spriteComponent.sourceRect;
-                    var color = spriteComponent.color;
-
-                    if (sprite == null)
-                    {
-                        _spriteBatch.DrawRectangle(new Rectangle((int)screenPosition.X, (int)screenPosition.Y, sourceRect.Width, sourceRect.Height), color);
-                    }
-                    else
-                    {
-                        _spriteBatch.Draw(sprite, position: screenPosition, sourceRectangle: sourceRect, color: color);
-                    }
-                }
             }
 
             _spriteBatch.End();
