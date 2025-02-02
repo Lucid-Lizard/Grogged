@@ -33,9 +33,11 @@ namespace Grogged
 
             Globals.SpriteBatch = this._spriteBatch;
             Globals.Content = this.Content;
-            Globals.windowSize = Window.ClientBounds.Size;
+            Globals.windowSize = new(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             
             myPlayer = _ecsCoordinator._EntityManager.CreateEntity<PlayerPrefab>();
+
+            _ecsCoordinator._EntityManager.CreateEntity<Dummy>();
 
             base.Initialize();
         }
@@ -50,8 +52,14 @@ namespace Grogged
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _ecsCoordinator.Update(deltaTime);
 
-            var comonent = myPlayer.Component<SpriteComponent>();  //m
-            cam.follow(comonent.sourceRect, Globals.windowSize.ToVector2());  //m
+            var component = myPlayer.Component<SpriteComponent>();  //m
+            var pPosition = myPlayer.Component<PositionComponent>();
+            cam.follow(
+                new Rectangle(
+                    (int)pPosition.X,
+                    (int)pPosition.Y,
+                    component.sourceRect.Width,
+                    component.sourceRect.Height), Globals.windowSize.ToVector2());  //m
 
             base.Update(gameTime);
 
@@ -63,6 +71,13 @@ namespace Grogged
             foreach(var kvp in _ecsCoordinator._EntityManager.GetAllComponents<SpriteComponent>())
             {
                 //sprite.draw(_spritebatch, new Vector2(.....
+                var pos1 = new Vector2(kvp.entityId.Component<PositionComponent>().X, kvp.entityId.Component<PositionComponent>().Y);
+                pos1 += kvp.component.sourceRect.Center.ToVector2();
+                pos1 -= cam.pos;
+
+                var newRect = new Rectangle(pos1.ToPoint(), kvp.component.sourceRect.Size);
+
+                _spriteBatch.DrawRectangle(newRect, kvp.component.color);
             }
 
             _spriteBatch.End();

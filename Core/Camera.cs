@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Grogged.Core
         public void follow(Rectangle player, Vector2 screenSize)
         {
             pos=new Vector2 (-player.X +(screenSize.X /2 - player.Width /2), -player.Y + (screenSize.Y / 2 - player.Height / 2)); //formula for follow camera
+            Debug.WriteLine(pos);
         }
     }
 }

@@ -57,4 +57,37 @@ namespace Grogged.ECS.Components
         /// </summary>
         private static void ResizeTileMap(ref TileMap map, Point position)
         {
-            in
+            int oldWidth = map.tiles.GetLength(0);
+            int oldHeight = map.tiles.GetLength(1);
+
+            // Determine new required bounds
+            int minX = Math.Min(position.X, -map.offsetX);
+            int minY = Math.Min(position.Y, -map.offsetY);
+            int maxX = Math.Max(position.X, oldWidth - 1 - map.offsetX);
+            int maxY = Math.Max(position.Y, oldHeight - 1 - map.offsetY);
+
+            int newWidth = maxX - minX + 1;
+            int newHeight = maxY - minY + 1;
+
+            // Create new expanded tilemap
+            TileData[,] newTiles = new TileData[newWidth, newHeight];
+
+            // Copy old tiles into the new array with the correct offset
+            for (int x = 0; x < oldWidth; x++)
+            {
+                for (int y = 0; y < oldHeight; y++)
+                {
+                    int newX = x + (-minX - map.offsetX);
+                    int newY = y + (-minY - map.offsetY);
+
+                    newTiles[newX, newY] = map.tiles[x, y];
+                }
+            }
+
+            // Update map with new size and offset
+            map.tiles = newTiles;
+            map.offsetX = -minX;
+            map.offsetY = -minY;
+        }
+    }
+}

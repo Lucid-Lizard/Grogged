@@ -14,5 +14,8 @@ public class Dummy : Prefab
 
         Debug.WriteLine($"{entityManager.GetComponent<PositionComponent>(entityId).X}");
         entityManager.AddComponent<VelocityComponent>(entityId, new VelocityComponent { X = 0, Y = 0 });
+
+        entityManager.AddComponent<SpriteComponent>(entityId, SpriteComponent.Create(
+            null, new(0, 0, 32, 32), Microsoft.Xna.Framework.Color.Beige, 1f, 0f, ""));
     }
 }
